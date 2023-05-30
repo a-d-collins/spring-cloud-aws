@@ -114,6 +114,12 @@ public class DynamoDbAutoConfiguration {
 	public DynamoDbEnhancedClient dynamoDbEnhancedClient(DynamoDbClient dynamoDbClient) {
 		return DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient).build();
 	}
+	
+	@ConditionalOnMissingBean
+	@Bean
+	public DynamoDbTableNameResolver dynamoDbTableNameResolver(DynamoDbProperties properties) {
+		return new DefaultDynamoDbTableNameResolver(properties.getTablePrefix());
+	}
 
 	@ConditionalOnMissingBean(DynamoDbOperations.class)
 	@Bean
